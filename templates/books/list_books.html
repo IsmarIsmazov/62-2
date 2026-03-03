@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+
+{% block content %}
+{% for book in books %}
+<div class="book" style="width: 100%; border: 1px solid; border-color: black; margin: 10px">
+    <h2>{{ book.title }}</h2>
+    <p>{{ book.description }}</p>
+    <p>{{ book.author }}</p>
+    <p>{{ book.created_at }}</p>
+    <p>{{ book.updated_at }}</p>
+    <a href="/books/{{ book.id }}">
+        <button>Read</button>
+    </a>
+</div>
+{% endfor %}
+{% endblock content %}

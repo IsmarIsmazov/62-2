@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div style="width: 100%; border: 1px solid; border-color: black; margin: 10px">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="title">
+        <p></p>
+        <input type="text" name="author" placeholder="author">
+        <p></p>
+        <input type="text" name="description" placeholder="description">
+        <p></p>
+        <input type="file" name="image">
+        <p></p>
+        <input type="text" name="content" placeholder="content">
+        <button class="btn btn-primary" type="submit" style="margin: 10px">Create <i class="bi bi-plus"></i>
+        </button>
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="book" style="width: 100%; border: 1px solid; border-color: black; margin: 10px">
+    {% if book.image %}
+    <img src="{{book.image.url}}" width="18%">
+    {% endif %}
+    <h2>{{ book.title }}</h2>
+    <p>description: {{ book.description }}</p>
+    <p>author: {{ book.author }}</p>
+    <p>content: {{ book.content }}</p>
+    <p>created_at: {{ book.created_at }}</p>
+    <p>updated_at: {{ book.updated_at }}</p>
+</div>
+
+{% endblock content %}

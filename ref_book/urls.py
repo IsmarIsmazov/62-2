@@ -20,11 +20,23 @@ from django.contrib import admin
 from django.urls import path
 
 from books.views import create_book, detail_book, home, list_ref_books
+from users.views import sign_in, sign_out, sign_up
+
+users = [
+    path("users/sign-up/", sign_up),
+    path("users/sign-in/", sign_in),
+    path("users/sign-out/", sign_out)
+]
+
+books = [
+    path("books/", list_ref_books),
+    path("books/<int:id>/", detail_book),
+    path("books/create/", create_book)
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home),
-    path("books/", list_ref_books),
-    path("books/<int:id>/", detail_book),
-    path("books/create/", create_book)
+    *books,
+    *users
 ] + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

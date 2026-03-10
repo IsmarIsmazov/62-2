@@ -1,6 +1,14 @@
 {% extends 'home.html' %}
 
 {% block content %}
+<div style="width: 100%; border: 1px solid; border-color: black; margin: 10px">
+    <form action="" method="GET" enctype="multipart/form-data">
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit" style="margin: 10px">Search <i class="bi bi-plus"></i>
+        </button>
+    </form>
+</div>
+
 {% for book in books %}
 <div class="book" style="width: 100%; border: 1px solid; border-color: black; margin: 10px">
     <h2>{{ book.title }}</h2>

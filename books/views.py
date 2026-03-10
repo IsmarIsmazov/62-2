@@ -1,12 +1,11 @@
-import re
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from books.forms import CreateBookForm
+from books.forms import CreateBookForm, SearchForm
 from books.models import Book
-from users.forms import SignUpForm
 
 # Create your views here.
 
@@ -18,7 +17,22 @@ def home(request):
 def list_ref_books(request):
     if request.method == "GET":
         all_books = Book.objects.all()
-        return render(request=request, template_name="books/list_books.html", context={"books": all_books})
+        form = SearchForm(request.GET)
+        if not form.is_valid():
+            return HttpResponse("Не существующий параметр")
+        search = form.cleaned_data.get("search", None)
+        category = form.cleaned_data.get("category", None)
+        author = form.cleaned_data.get("author", None)
+        tags = form.cleaned_data.get("tags", None)
+        if search:
+            all_books = all_books.filter(Q(title__icontains=search) | Q(description__icontains=search))
+        if category:
+            all_books = all_books.filter(category=category)
+        if author:
+            print(author)
+        if tags:
+            all_books = all_books.filter(tags__in=tags)
+        return render(request=request, template_name="books/list_books.html", context={"books": all_books, "form": form})
 
 def detail_book(request, id):
     if request.method == "GET":

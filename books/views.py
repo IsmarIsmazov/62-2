@@ -17,6 +17,13 @@ def home(request):
 def list_ref_books(request):
     if request.method == "GET":
         all_books = Book.objects.all()
+        limit = 3
+        page = int(request.GET.get("page", 1)) 
+        max_page = all_books.count() // limit + 1
+        list_pages = range(1, max_page + 1)
+        start = (page - 1) * limit
+        end = page * limit
+        all_books = all_books[start:end]
         form = SearchForm(request.GET)
         if not form.is_valid():
             return HttpResponse("Не существующий параметр")
@@ -32,7 +39,11 @@ def list_ref_books(request):
             print(author)
         if tags:
             all_books = all_books.filter(tags__in=tags)
-        return render(request=request, template_name="books/list_books.html", context={"books": all_books, "form": form})
+        return render(
+            request=request, 
+            template_name="books/list_books.html", 
+            context={"books": all_books, "form": form, "list_pages": list_pages}
+            )
 
 def detail_book(request, id):
     if request.method == "GET":
